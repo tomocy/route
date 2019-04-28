@@ -20,6 +20,10 @@ func (m RouteMap) Route(name string) *RouteSet {
 	return m[name]
 }
 
+func (m RouteMap) Method(name string) string {
+	return m[name].Method
+}
+
 func (m RouteMap) URL(name string) *url.URL {
 	return m[name].URL
 }

@@ -81,6 +81,42 @@ func testURL(t *testing.T, actual, expected string) {
 	}
 }
 
+func TestMethod(t *testing.T) {
+	routeMap.Map(
+		RawMap{
+			"user.delete": &RawSet{
+				Method: http.MethodDelete,
+				URL:    localhost("/users/{id}"),
+			},
+		},
+	)
+
+	tests := []struct {
+		tname    string
+		name     string
+		expected string
+	}{
+		{
+			tname:    "success",
+			name:     "user.delete",
+			expected: http.MethodDelete,
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			actual := routeMap.Method(test.name)
+			errorfIfNotEqual(t, actual, test.expected)
+		})
+	}
+}
+
+func errorfIfNotEqual(t *testing.T, actual, expected interface{}) {
+	if actual != expected {
+		errorf(t, actual, expected)
+	}
+}
+
 func errorf(t *testing.T, actual, expected interface{}) {
 	t.Errorf("Got %v, Expected %v\n", actual, expected)
 }
