@@ -20,6 +20,10 @@ func (m RouteMap) Route(name string) *RouteSet {
 	return m[name]
 }
 
+func (m RouteMap) URL(name string) *url.URL {
+	return m[name].URL
+}
+
 func (m RouteMap) Map(rawMap RawMap) {
 	for name, rawSet := range rawMap {
 		m[name] = &RouteSet{

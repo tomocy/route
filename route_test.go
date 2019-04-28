@@ -6,8 +6,11 @@ import (
 	"testing"
 )
 
+var (
+	routeMap = make(RouteMap)
+)
+
 func TestRoute(t *testing.T) {
-	routeMap := make(RouteMap)
 	routeMap.Map(
 		RawMap{
 			"user.index": &RawSet{
@@ -40,6 +43,46 @@ func TestRoute(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestURL(t *testing.T) {
+	routeMap.Map(
+		RawMap{
+			"user.create": &RawSet{
+				Method: http.MethodPost,
+				URL:    localhost("/users"),
+			},
+		},
+	)
+
+	tests := []struct {
+		tname    string
+		name     string
+		expected string
+	}{
+		{
+			tname:    "success",
+			name:     "user.index",
+			expected: "http://localhost/users",
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			actual := routeMap.URL(test.name)
+			testURL(t, actual.String(), test.expected)
+		})
+	}
+}
+
+func testURL(t *testing.T, actual, expected string) {
+	if actual != expected {
+		errorf(t, actual, expected)
+	}
+}
+
+func errorf(t *testing.T, actual, expected interface{}) {
+	t.Errorf("Got %v, Expected %v\n", actual, expected)
 }
 
 func localhost(p string) string {
