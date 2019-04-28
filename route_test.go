@@ -35,12 +35,8 @@ func TestRoute(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			actual := routeMap.Route(test.name)
-			if actual.Method != test.expectedMethod {
-				t.Errorf("Got %v, Expected %v\n", actual.Method, test.expectedMethod)
-			}
-			if actual.URL.String() != test.expectedURL {
-				t.Errorf("Got %v, Expected %v\n", actual.URL.String(), test.expectedURL)
-			}
+			errorfIfNotEqual(t, actual.Method, test.expectedMethod)
+			errorfIfNotEqual(t, actual.URL.String(), test.expectedURL)
 		})
 	}
 }
@@ -70,14 +66,8 @@ func TestURL(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			actual := routeMap.URL(test.name)
-			testURL(t, actual.String(), test.expected)
+			errorfIfNotEqual(t, actual.String(), test.expected)
 		})
-	}
-}
-
-func testURL(t *testing.T, actual, expected string) {
-	if actual != expected {
-		errorf(t, actual, expected)
 	}
 }
 
@@ -113,12 +103,8 @@ func TestMethod(t *testing.T) {
 
 func errorfIfNotEqual(t *testing.T, actual, expected interface{}) {
 	if actual != expected {
-		errorf(t, actual, expected)
+		t.Errorf("Got %v, Expected %v\n", actual, expected)
 	}
-}
-
-func errorf(t *testing.T, actual, expected interface{}) {
-	t.Errorf("Got %v, Expected %v\n", actual, expected)
 }
 
 func localhost(p string) string {
