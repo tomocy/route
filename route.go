@@ -2,38 +2,17 @@ package route
 
 import "net/url"
 
-type RawSet struct {
-	Method string
-	URL    string
-}
+type RawURLMap map[string]string
 
-type RawMap map[string]*RawSet
+type RouteMap map[string]*url.URL
 
-type RouteSet struct {
-	Method string
-	URL    *url.URL
-}
-
-type RouteMap map[string]*RouteSet
-
-func (m RouteMap) Route(name string) *RouteSet {
+func (m RouteMap) Route(name string) *url.URL {
 	return m[name]
 }
 
-func (m RouteMap) Method(name string) string {
-	return m[name].Method
-}
-
-func (m RouteMap) URL(name string) *url.URL {
-	return m[name].URL
-}
-
-func (m RouteMap) Map(rawMap RawMap) {
-	for name, rawSet := range rawMap {
-		m[name] = &RouteSet{
-			Method: rawSet.Method,
-			URL:    parseURL(rawSet.URL),
-		}
+func (m RouteMap) Map(rmap RawURLMap) {
+	for name, raw := range rmap {
+		m[name] = parseURL(raw)
 	}
 }
 
