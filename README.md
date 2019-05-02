@@ -1,5 +1,7 @@
 # Route
 
+[![CircleCI](https://circleci.com/gh/tomocy/route.svg?style=svg)](https://circleci.com/gh/tomocy/route)
+
 route manager
 
 ## Installation
