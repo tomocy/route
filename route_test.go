@@ -11,7 +11,7 @@ var (
 
 func TestRoute(t *testing.T) {
 	routeMap.Map(
-		RawURLMap{
+		RawMap{
 			"user.index": localhost("/users"),
 			"user.new":   localhost("/users/new"),
 		},
