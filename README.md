@@ -13,6 +13,12 @@ go get github.com/tomocy/route
 ## Useage
 Map routes
 ```go
+package route
+
+import (
+    // ...
+)
+
 func MapRoutes() {
     Web.Map(webRaw)
     API.Map(apiRaw)
