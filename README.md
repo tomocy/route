@@ -1,6 +1,7 @@
 # Route
 
 [![CircleCI](https://circleci.com/gh/tomocy/route.svg?style=svg)](https://circleci.com/gh/tomocy/route)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 route manager
 
